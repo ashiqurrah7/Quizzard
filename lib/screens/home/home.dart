@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzard/services/auth.dart';
 
 void main() => runApp(MaterialApp(
   home: Home(),
@@ -13,25 +14,28 @@ List<String> enrolled = ['CSE 490','CSE 491', 'CSE 424'];
 
 class _HomeState extends State<Home> {
 
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       drawer: Drawer(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             DrawerHeader(
               child: Column(
+
                 children: <Widget>[
                   Icon(Icons.people),
                   Text('Hello User'),
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Text('Settings'
-              ),
+            FlatButton(child: Icon(Icons.exit_to_app,), onPressed: () async{
+              await _auth.signOut();
+            },
             )
           ],
         ),

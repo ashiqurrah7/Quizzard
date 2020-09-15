@@ -1,10 +1,10 @@
-class Users {
+class User {
   final String uid;
   String fname;
   String username;
   String password;
 
-  Users({
+  User({
     this.uid,
     this.fname,
     this.username,

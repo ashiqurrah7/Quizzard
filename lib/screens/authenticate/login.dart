@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quizzard/services/auth.dart';
+import 'package:quizzard/shared/constants.dart';
+import 'package:quizzard/shared/loading.dart';
 
 void main() => runApp(MaterialApp(
   home: Login(),
@@ -10,6 +12,9 @@ void main() => runApp(MaterialApp(
 
 class Login extends StatefulWidget {
 
+  final Function toggleView;
+  Login({ this.toggleView });
+
   @override
   _LoginState createState() => _LoginState();
 }
@@ -17,54 +22,41 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
 
   final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
+  bool loading = false;
+
 
   String username = '';
   String password = '';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       backgroundColor: Colors.purple[400],
       body: Center(
         child: Container(
           height: 200,
           width: 200,
           child: Form(
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30)
-                  ),
-                  padding: EdgeInsets.only(left: 20),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Username',
-                    ),
-                    onChanged: (val){
-                      setState(() => username = val);
-                    },
-                  ),
+                TextFormField(
+                  validator: (val) => val.isEmpty ? 'Enter a username' : null,
+                  decoration: textInputDecoration.copyWith(hintText: 'Email'),
+                  onChanged: (val){
+                    setState(() => username = val);
+                  },
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30)
-                  ),
-                  padding: EdgeInsets.only(left: 20),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Password',
-                    ),
-                    obscureText: true,
-                    onChanged: (val){
-                      setState(() => password = val);
-                    }
-                  ),
+                TextFormField(
+                  validator: (val) => val.length < 6 ? 'Enter a password which is 6+ characters long' : null,
+                  decoration: textInputDecoration.copyWith(hintText: 'Password'),
+                  obscureText: true,
+                  onChanged: (val){
+                    setState(() => password = val);
+                  }
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -81,8 +73,17 @@ class _LoginState extends State<Login> {
                             fontSize: 16,
                           ),
                         ),
-                        onPressed: (){
-
+                        onPressed: () async {
+                          if (_formKey.currentState.validate()){
+                            setState(() => loading = true);
+                            dynamic result = await _auth.signInWithCreds(username, password);
+                            if(result == null) {
+                              setState(() {
+                                error = 'Could not sign in with those credentials';
+                                loading = false;
+                              });
+                            }
+                          }
                         },
                       ),
                       MaterialButton(
@@ -98,7 +99,7 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         onPressed: (){
-                          Navigator.pushNamed(context, '/register');
+                          widget.toggleView();
                         },
                       ),
                     ],

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizzard/models/user.dart';
-import '../home.dart';
-import '../login.dart';
+import 'package:quizzard/screens/authenticate/authenticate.dart';
+import 'package:quizzard/screens/authenticate//login.dart';
+import 'home/home.dart';
 
 
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final user = Provider.of<Users>(context);
+    final user = Provider.of<User>(context);
 
     if (user == null){
-      return Login();
+      return Authenticate();
     }else{
       return Home();
     }

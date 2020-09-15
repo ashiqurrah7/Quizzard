@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "836897474708",
+    "firebase_url": "https://quizzard-98434.firebaseio.com",
+    "project_id": "quizzard-98434",
+    "storage_bucket": "quizzard-98434.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836897474708:android:1e216587f35bdf664acc81",
+        "android_client_info": {
+          "package_name": "com.cseandroid.quizzard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "836897474708-tdkkkmhliuivfl4djneoibc76aru81jg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPGcsfkBCTtrMbTtzSn7lQV7QAOz70__E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "836897474708-tdkkkmhliuivfl4djneoibc76aru81jg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
