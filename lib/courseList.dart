@@ -90,8 +90,13 @@ class DataSearch extends SearchDelegate<String>{
       width: double.infinity,
       padding: EdgeInsets.all(8),
       child: Card(
-        child: Center(
-          child: Text(selected),
+        child: MaterialButton(
+          child: Center(
+            child: Text(selected),
+          ),
+          onPressed: (){
+
+          },
         ),
       ),
     );

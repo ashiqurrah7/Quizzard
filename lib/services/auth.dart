@@ -5,11 +5,12 @@ import 'package:quizzard/services/database.dart';
 class AuthService {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+   String fname;
+   String email;
 
   //create user obj based on FirebaseUser
   User _userFromFireBaseUser(FirebaseUser user){
-    return user != null? User(uid: user.uid) : null;
+    return user != null? User(uid: user.uid, fname: this.fname, email: this.email) : null;
   }
 
   // auth change user stream
@@ -30,13 +31,13 @@ class AuthService {
     }
   }
   // register with credentials
-  Future registerWithCreds(String username, String password) async{
+  Future registerWithCreds(String fname, String password, String email) async{
     try{
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: username, password: password);
+      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
-
+      this.fname = fname;
       //create a new document for the user with uid
-      await DatabaseService(uid: user.uid).updateUserData('Dummy Course');
+      await DatabaseService(uid: user.uid).updateUserData(['Dummy Course']);
       return _userFromFireBaseUser(user);
     }catch(e){
       print(e.toString());

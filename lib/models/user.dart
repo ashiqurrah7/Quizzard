@@ -1,14 +1,12 @@
 class User {
   final String uid;
   String fname;
-  String username;
-  String password;
+  String email;
 
   User({
     this.uid,
     this.fname,
-    this.username,
-    this.password,
+    this.email,
 });
 
 }

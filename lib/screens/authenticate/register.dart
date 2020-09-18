@@ -25,7 +25,7 @@ class _RegisterState extends State<Register> {
   bool loading = false;
 
   String fname = '';
-  String username = '';
+  String email = '';
   String password = '';
   String cpassword = '';
   String error ='';
@@ -55,7 +55,7 @@ class _RegisterState extends State<Register> {
                   validator: (val) => val.isEmpty ? 'Enter a email' : null,
                   decoration: textInputDecoration.copyWith(hintText: 'Email'),
                   onChanged: (val){
-                    setState(() => username = val);
+                    setState(() => email = val);
                   },
                 ),
                 TextFormField(
@@ -108,7 +108,7 @@ class _RegisterState extends State<Register> {
                       onPressed: () async{
                         if (_formKey.currentState.validate()){
                           setState(() => loading = true);
-                          dynamic result = await _auth.registerWithCreds(username, password);
+                          dynamic result = await _auth.registerWithCreds(fname, password,email);
                           if(result == null) {
                             setState((){
                               error = 'Error occurred while registering';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzard/Leaderboard.dart';
 import 'package:quizzard/screens/home/home.dart';
 import 'package:quizzard/courseList.dart';
 import 'package:quizzard/screens/authenticate//login.dart';
@@ -9,6 +10,8 @@ import 'package:quizzard/quiz.dart';
 import 'package:provider/provider.dart';
 import 'package:quizzard/services/auth.dart';
 import 'package:quizzard/screens/wrapper.dart';
+import 'QuestionLoop.dart';
+import 'Result.dart';
 
 void main() => runApp(Quizzard());
 
@@ -27,6 +30,9 @@ class Quizzard extends StatelessWidget {
            '/register' : (context) => Register(),
            '/quizList' : (context) => QuizList(),
            '/quiz' : (context) => Quiz(),
+           '/questionLoop' : (context) => QuestionLoop(),
+           '/result' : (context) => Result(),
+           '/leaderboard' : (context) => Leaderboard(),
          }
      )
    );

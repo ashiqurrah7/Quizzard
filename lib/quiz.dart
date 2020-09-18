@@ -35,7 +35,7 @@ class Quiz extends StatelessWidget {
             ),
           ),
           onPressed: (){
-
+            Navigator.pushNamed(context, '/questionLoop',);
           },
         ),
       ),

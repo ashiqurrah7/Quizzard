@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:quizzard/models/enrolled.dart';
 
 class DatabaseService{
 
@@ -8,10 +9,21 @@ class DatabaseService{
   //collection reference
   final CollectionReference enrollCollection = Firestore.instance.collection('enrolled');
 
-  Future updateUserData(String course) async{
+  Future updateUserData(List course) async{
     return await enrollCollection.document(uid).setData({
+      'uid' : uid,
       'course' : course,
     });
   }
-  
+
+  // Map<Enrolled> _enrolledListFromSnapshot(QuerySnapshot snapshot){
+  //   return snapshot.documents.map((doc) =>
+  //      Enrolled(course: doc.data['course'] ?? '')
+  //   ).toList();
+  // }
+
+  Stream<QuerySnapshot> get enrolled {
+    return enrollCollection.snapshots();
+  }
+
 }
