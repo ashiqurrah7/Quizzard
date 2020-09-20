@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MaterialApp(
@@ -10,6 +11,8 @@ class CourseList extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+
+    final String uid = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
@@ -39,7 +42,7 @@ class CourseList extends StatelessWidget{
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
                   ),),
                 onPressed: (){
-
+                  Firestore.instance.collection('enrolled').document(uid).updateData({'course': FieldValue.arrayUnion([courses[index]])});
                 },
               ),
             );

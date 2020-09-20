@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
             IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
-                Navigator.pushNamed(context, '/courseList');
+                Navigator.pushNamed(context, '/courseList', arguments: widget.user.uid);
               },
             ),
           ],

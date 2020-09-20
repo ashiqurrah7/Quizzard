@@ -1,23 +1,62 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:quizzard/QuestionLoop.dart';
+import 'package:quizzard/shared/loading.dart';
 
 void main() => runApp(MaterialApp(
   home: Quiz(),
 ));
 
-List<String> questions = ['Quiz 1','Quiz 2', 'Quiz 3', 'Quiz 4'];
 
-class Quiz extends StatelessWidget {
+class Quiz extends StatefulWidget {
+
+  final String quiz;
+  final String course;
+  Quiz({this.quiz,this.course});
+
+  @override
+  _QuizState createState() => _QuizState();
+}
+
+class _QuizState extends State<Quiz> {
+
+  List questions;
+
+  bool loading = false;
+
+  getQuestions() {
+    return Firestore.instance.collection('courses')
+        .document(widget.course)
+        .collection('quizzes').document(widget.quiz).get().then((docs) {
+      setState(() {
+        questions = docs.data['questions'];
+      });
+    },
+    );
+  }
+
+  @override
+  void initState(){
+    getQuestions();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    final Map data = ModalRoute.of(context).settings.arguments;
-    final String title = data['title'];
+    if(questions==null){
+      loading=true;
+    }else{
+      loading = false;
+      print(questions);
+    }
 
-    return Scaffold(
+
+
+    return loading ? Loading() : Scaffold(
         appBar: AppBar(
           elevation: 0,
-          title: Text(title),
+          title: Text(widget.quiz),
           centerTitle: true,
           backgroundColor: Colors.purple[400],
         ),
@@ -35,7 +74,7 @@ class Quiz extends StatelessWidget {
             ),
           ),
           onPressed: (){
-            Navigator.pushNamed(context, '/questionLoop',);
+            Navigator.pushNamed(context, '/questionLoop', arguments: {'course':widget.course,'questions':questions});
           },
         ),
       ),

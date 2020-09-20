@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzard/quizList.dart';
 
 class Leaderboard extends StatefulWidget {
 
@@ -24,7 +25,13 @@ class _LeaderboardState extends State<Leaderboard> {
      @override
      Widget build(BuildContext context) {
 
-      int newUser = ModalRoute.of(context).settings.arguments;
+      Map passedData = ModalRoute.of(context).settings.arguments;
+      print(passedData);
+      // int newUser = passedData['result'];
+      // String course = passedData['course'];
+      //
+      final int newUser = passedData['result'];
+      final String course = passedData['course'];
       data.add({'name': 'You', 'score': newUser});
       sort();
 
@@ -49,7 +56,9 @@ class _LeaderboardState extends State<Leaderboard> {
                     color: Colors.white,
                     fontSize: 16,
                   ),
-                ), onPressed: ()=> Navigator.popUntil(context, ModalRoute.withName('/quizList')),
+                ), onPressed: ()=> Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                builder: (context) => QuizList(title: course,),
+              ), ModalRoute.withName('/'))
               ),
             ],
           ),
