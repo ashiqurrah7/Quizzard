@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class QuestionLoop extends StatefulWidget {
-  
+
 
 
   @override
@@ -25,6 +25,7 @@ class _QuestionLoopState extends State<QuestionLoop> {
   bool cancelTimer = false;
   List questions;
   bool isDisabled = false;
+  bool isShuffled = false;
   // = [
   //   {'question':'Question 1',
   //     'options' : ['option 1', 'option 2', 'option 3', 'option 4'],
@@ -130,7 +131,6 @@ class _QuestionLoopState extends State<QuestionLoop> {
   @override
   void initState(){
     startTimer();
-    questions.shuffle();
     super.initState();
   }
 
@@ -139,6 +139,10 @@ class _QuestionLoopState extends State<QuestionLoop> {
 
     Map data = ModalRoute.of(context).settings.arguments;
     questions = data['questions'];
+    if(!isShuffled){
+      questions.shuffle();
+      isShuffled=true;
+    }
     final String course = data['course'];
 
     void nextQuestion(){

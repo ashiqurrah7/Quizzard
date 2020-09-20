@@ -19,7 +19,7 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-List<String> enrolled = ['CSE 490','CSE 491', 'CSE 424'];
+// List<String> enrolled = ['CSE 490','CSE 491', 'CSE 424'];
 
 class _HomeState extends State<Home> {
 
